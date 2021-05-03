@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
     private bool gridRendered;
 
     private SwipeInput swipeInput;
-    [SerializeField]
-    private GridManager gridManager;
 
 
     private void Awake()
@@ -32,13 +27,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        gridManager.GetParameters(ref rows, ref cols);     //sets rows and columns count from Gridmanager
-        gridManager.GetOrigin(ref x, ref y);               //sets origin tile index according to rows and columns to x and y
+        GridManager.Instance.GetParameters(ref rows, ref cols);     //sets rows and columns count from Gridmanager
+        GridManager.Instance.GetOrigin(ref x, ref y);               //sets origin tile index according to rows and columns to x and y
     }
 
     private void Update()
     {
-        gridRendered = gridManager.gridDone;
+        gridRendered = GridManager.Instance.gridDone;
         if (!gridRendered)
             return;
 
@@ -83,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
             Movement();
             return;
         }
-        desiredPos = gridManager.GetGridPosition(x, y);         //sets the destination for player based on swipes
+        desiredPos = GridManager.Instance.GetGridPosition(x, y);         //sets the destination for player based on swipes
         Movement();
         if (transform.position == desiredPos)
         {
@@ -104,14 +99,14 @@ public class PlayerMovement : MonoBehaviour
         if (x >= rows)
         {
             x = 0;
-            transform.position = gridManager.GetGridPosition(x, y);
+            transform.position = GridManager.Instance.GetGridPosition(x, y);
             Debug.Log("From above");
         }
         //checking left side
         if (x < 0)
         {
             x = rows - 1;
-            transform.position = gridManager.GetGridPosition(x, y);
+            transform.position = GridManager.Instance.GetGridPosition(x, y);
             Debug.Log("From below");
 
         }
@@ -119,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         if (y >= cols)
         {
             y = 0;
-            transform.position = gridManager.GetGridPosition(x, y);
+            transform.position = GridManager.Instance.GetGridPosition(x, y);
             Debug.Log("From left");
 
         }
@@ -127,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         if (y < 0)
         {
             y = cols - 1;
-            transform.position = gridManager.GetGridPosition(x, y);
+            transform.position = GridManager.Instance.GetGridPosition(x, y);
             Debug.Log("From right");
 
         }
