@@ -11,6 +11,8 @@ public class GridManager : MonoBehaviour
     [Tooltip("Reference prefab for tile sprite")]
     public GameObject tile;
 
+    public bool gridDone = false;
+
     private Transform[] transforms;
 
     private int k = 1;
@@ -56,10 +58,11 @@ public class GridManager : MonoBehaviour
             for (int j = 0; j < cols; j++)
             {
                 grid[i, j] = transforms[k].transform.position;
-                Debug.Log(grid[i, j], transforms[k]);
+                Debug.Log("(" + i + "," + j + "): " + grid[i, j], transforms[k]);
                 k++;
             }
         }
+        gridDone = true;
     }
     //to correct the width and height of screen
     void SizeCorrection()
@@ -91,21 +94,23 @@ public class GridManager : MonoBehaviour
     {
         float x;
         float y;
-        if (IsOdd(cols))
-        {
-            x = (cols + 1) / 2;
-        }
-        else
-        {
-            x = (cols / 2) + 1;
-        }
         if (IsOdd(rows))
         {
-            y = (rows + 1) / 2;
+            x = (rows + 1) / 2;
+            x -= 1;
         }
         else
         {
-            y = (rows / 2) + 1;
+            x = (rows / 2);
+        }
+        if (IsOdd(cols))
+        {
+            y = (cols + 1) / 2;
+            y -= 1;
+        }
+        else
+        {
+            y = (cols / 2);
         }
         i = (int)x;
         j = (int)y;

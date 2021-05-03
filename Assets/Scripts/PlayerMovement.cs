@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Transform player;
-    private Vector3 desiredPos, playerPos;
+    [Tooltip("Destination for player as per input")]
+    private Vector3 desiredPos;
+    [SerializeField]
+    [Tooltip("Speed at which player travels to next cell")]
+    private float speed;
+    [Tooltip("Indexes of grid")]
     private int x, y;
     private int rows, cols;
+
+    private int verticalDirection, horizontalDirection;
+    //to stop turn while travelling unless its on a node
+    private bool canTurn;
+
+    //If the grid is fully rendered and positions are recorded
+    private bool gridRendered;
 
     private SwipeInput swipeInput;
     [SerializeField]
@@ -16,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         swipeInput = GetComponent<SwipeInput>();            //script is attached to player
-        player = GetComponent<Transform>();
     }
 
     private void Start()
@@ -27,21 +37,103 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.position = gridManager.GetGridPosition(x, y);
+        gridRendered = gridManager.gridDone;
+        if (!gridRendered)
+            return;
+        if (swipeInput.IsDragging)
+        {
+            UpdateDirection();
+
+        }
         ApplyMovement();
-    }
-    private void ApplyMovement()                            //Applying movement as per Player Swipe Input
-    {
-        playerPos = player.transform.position;
-        if (swipeInput.SwipeRight)
-            desiredPos = playerPos + Vector3.right;
-        if (swipeInput.SwipeLeft)
-            desiredPos = playerPos + Vector3.left;
-        if (swipeInput.SwipeUp)
-            desiredPos = playerPos + Vector3.up;
-        if (swipeInput.SwipeDown)
-            desiredPos = playerPos + Vector3.down;
-        player.transform.position = Vector3.MoveTowards(playerPos, desiredPos, Time.deltaTime);
+
 
     }
+    void UpdateDirection()
+    {
+        if (swipeInput.SwipeLeft)
+        {
+            //moveDirection = Vector3.left;
+            horizontalDirection = -1;
+            verticalDirection = 0;
+        }
+        if (swipeInput.SwipeRight)
+        {
+            //moveDirection = Vector3.right;
+            horizontalDirection = 1;
+            verticalDirection = 0;
+        }
+        if (swipeInput.SwipeUp)
+        {
+            // moveDirection = Vector3.up;
+            horizontalDirection = 0;
+            verticalDirection = -1;
+        }
+        if (swipeInput.SwipeDown)
+        {
+            // moveDirection = Vector3.down;
+            horizontalDirection = 0;
+            verticalDirection = 1;
+        }
+    }
+
+    private void ApplyMovement()                            //Applying movement as per Player Swipe Input
+    {
+        if (x < 0 || y < 0 || x >= rows || y >= cols)       //If co-ordinates are out of grid
+        {
+            Teleport();
+            Movement();
+            return;
+        }
+        desiredPos = gridManager.GetGridPosition(x, y);
+        Movement();
+        if (transform.position == desiredPos)
+        {
+            x += verticalDirection;
+            y += horizontalDirection;
+            canTurn = true;
+        }
+
+    }
+
+    private void Movement()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed * Time.deltaTime);
+    }
+
+    private void Teleport()
+    {
+        //checking right side
+        if (x >= rows)
+        {
+            x = 0;
+            transform.position = gridManager.GetGridPosition(x, y);
+            Debug.Log("From above");
+        }
+        //checking left side
+        if (x < 0)
+        {
+            x = rows - 1;
+            transform.position = gridManager.GetGridPosition(x, y);
+            Debug.Log("From below");
+
+        }
+        //checking top
+        if (y >= cols)
+        {
+            y = 0;
+            transform.position = gridManager.GetGridPosition(x, y);
+            Debug.Log("From left");
+
+        }
+        //checking bottom
+        if (y < 0)
+        {
+            y = cols - 1;
+            transform.position = gridManager.GetGridPosition(x, y);
+            Debug.Log("From right");
+
+        }
+    }
+
 }

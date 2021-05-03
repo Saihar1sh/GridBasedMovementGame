@@ -13,6 +13,7 @@ public class SwipeInput : MonoBehaviour
     public bool SwipeRight { get { return swipeRight; } }
     public bool SwipeUp { get { return swipeUp; } }
     public bool SwipeDown { get { return swipeDown; } }
+    public bool IsDragging { get { return isDragging; } }
 
 
 
@@ -75,7 +76,7 @@ public class SwipeInput : MonoBehaviour
         }
 
         //checking if swipe exceeded the deadzone(no input will be considered if swipe is less than the zone)
-        if (swipeDelta.magnitude > 100)         //Till 100 pixels is considered as deadzone
+        if (swipeDelta.magnitude > 50)         //Till 50 pixels is considered as deadzone
         {
             float x = swipeDelta.x;
             float y = swipeDelta.y;
