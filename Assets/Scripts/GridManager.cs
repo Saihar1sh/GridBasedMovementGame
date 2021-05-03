@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
@@ -19,15 +20,22 @@ public class GridManager : MonoBehaviour
 
     //height and width of each cell in grid
     private float rowHeight, colWidth;
-    //grid : 2 dimensional array to store positions as vector2
+    //2 dimensional array to store positions as vector2
     private Vector2[,] grid;
+
+    private GridLayoutGroup gridLayoutGroup;
+
+    private void Awake()
+    {
+        gridLayoutGroup = GetComponent<GridLayoutGroup>();
+    }
 
     void Start()
     {
         SizeCorrection();
         rowHeight = height / rows;
         colWidth = width / cols;
-        DrawGrid();
+        InstantiateTiles();
         StartCoroutine(GridImplementation());
     }
 
@@ -51,7 +59,7 @@ public class GridManager : MonoBehaviour
         grid = new Vector2[rows, cols];                 //creating grid
         transforms = GetComponentsInChildren<Transform>();
 
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();           //For gridlayout to arrange tiles
 
         for (int i = 0; i < rows; i++)
         {
@@ -63,6 +71,7 @@ public class GridManager : MonoBehaviour
             }
         }
         gridDone = true;
+
     }
     //to correct the width and height of screen
     void SizeCorrection()
@@ -77,7 +86,7 @@ public class GridManager : MonoBehaviour
         }
     }
     //draw tiles at each node to visualise the grid positions
-    void DrawGrid()
+    void InstantiateTiles()
     {
         for (int i = 0; i < rows; i++)
         {
@@ -85,9 +94,11 @@ public class GridManager : MonoBehaviour
             {
                 GameObject _tile = Instantiate(tile, transform);                //tile gameobjects are instantiated as child to this gameobject
 
-                //    _tile.transform.position = new Vector3(grid[i, j].x, grid[i, j].y, 0f);
             }
         }
+        gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        gridLayoutGroup.constraintCount = cols;
+
     }
     //changes input indexes to that of cell acting as center 
     public void GetOrigin(ref int i, ref int j)

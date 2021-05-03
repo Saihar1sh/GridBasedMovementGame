@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,9 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private int x, y;
     private int rows, cols;
 
+    //directions in normalized form:  -1, 0, 1
     private int verticalDirection, horizontalDirection;
-    //to stop turn while travelling unless its on a node
-    private bool canTurn;
 
     //If the grid is fully rendered and positions are recorded
     private bool gridRendered;
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GridManager gridManager;
 
+
     private void Awake()
     {
         swipeInput = GetComponent<SwipeInput>();            //script is attached to player
@@ -31,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        gridManager.GetParameters(ref rows, ref cols);
-        gridManager.GetOrigin(ref x, ref y);
+        gridManager.GetParameters(ref rows, ref cols);     //sets rows and columns count from Gridmanager
+        gridManager.GetOrigin(ref x, ref y);               //sets origin tile index according to rows and columns to x and y
     }
 
     private void Update()
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         gridRendered = gridManager.gridDone;
         if (!gridRendered)
             return;
+
         if (swipeInput.IsDragging)
         {
             UpdateDirection();
@@ -53,25 +55,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (swipeInput.SwipeLeft)
         {
-            //moveDirection = Vector3.left;
             horizontalDirection = -1;
             verticalDirection = 0;
         }
         if (swipeInput.SwipeRight)
         {
-            //moveDirection = Vector3.right;
             horizontalDirection = 1;
             verticalDirection = 0;
         }
         if (swipeInput.SwipeUp)
         {
-            // moveDirection = Vector3.up;
             horizontalDirection = 0;
             verticalDirection = -1;
         }
         if (swipeInput.SwipeDown)
         {
-            // moveDirection = Vector3.down;
             horizontalDirection = 0;
             verticalDirection = 1;
         }
@@ -85,23 +83,22 @@ public class PlayerMovement : MonoBehaviour
             Movement();
             return;
         }
-        desiredPos = gridManager.GetGridPosition(x, y);
+        desiredPos = gridManager.GetGridPosition(x, y);         //sets the destination for player based on swipes
         Movement();
         if (transform.position == desiredPos)
         {
             x += verticalDirection;
             y += horizontalDirection;
-            canTurn = true;
         }
 
     }
-
+    //travelling to the destination for player 
     private void Movement()
     {
         transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed * Time.deltaTime);
     }
 
-    private void Teleport()
+    private void Teleport()                 //teleporting to another side of screen when reached end of this side
     {
         //checking right side
         if (x >= rows)
