@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Button pauseBtn;
+    private Button pauseBtn, startMenuBtn, exitBtn;
     [SerializeField]
     private Image pauseBGImage;
 
@@ -16,7 +15,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         pauseBtn.onClick.AddListener(PauseGame);
-        pauseBGImage.enabled = false;
+        startMenuBtn.onClick.AddListener(LoadStartMenu);
+        exitBtn.onClick.AddListener(ExitGame);
+        pauseBGImage.gameObject.SetActive(false);
     }
 
     private void PauseGame()
@@ -26,6 +27,14 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0;
         else
             Time.timeScale = 1;
-        pauseBGImage.enabled = pausePressed;
+        pauseBGImage.gameObject.SetActive(pausePressed);
+    }
+    private void LoadStartMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    private void ExitGame()
+    {
+        Application.Quit();
     }
 }
