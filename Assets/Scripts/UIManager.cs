@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Time.timeScale = 1;
         pauseBtn.onClick.AddListener(PauseGame);
         startMenuBtn.onClick.AddListener(LoadStartMenu);
         exitBtn.onClick.AddListener(ExitGame);
