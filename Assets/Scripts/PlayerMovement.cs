@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     [Tooltip("Speed at which player travels to next cell")]
     private float speed;
+    [Tooltip("For disabling and enabling movement")]
+    private float prevSpeedValue;
     [Tooltip("Indexes of grid")]
     private int x, y;
     private int rows, cols;
@@ -29,9 +31,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        gridManager = GridManager.Instance;
         gridManager.GetParameters(ref rows, ref cols);     //sets rows and columns count from Gridmanager
         gridManager.GetOrigin(ref x, ref y);               //sets origin tile index according to rows and columns to x and y
-        speed = PlayerPrefs.GetInt("InputSpeed");
+        speed = prevSpeedValue = PlayerPrefs.GetInt("InputSpeed");
     }
 
     private void Update()
@@ -127,5 +130,17 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+
+    public void DisableMovement()
+    {
+        prevSpeedValue = speed;
+        speed = 0;
+    }
+
+    public void EnableMovement()
+    {
+        speed = prevSpeedValue;
+    }
+
 
 }

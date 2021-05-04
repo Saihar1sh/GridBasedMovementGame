@@ -8,13 +8,15 @@ public class UIManager : MonoBehaviour
     private Button pauseBtn, startMenuBtn, exitBtn;
     [SerializeField]
     private Image pauseBGImage;
+    [SerializeField]
+    private PlayerMovement player;
 
     private bool pausePressed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         pauseBtn.onClick.AddListener(PauseGame);
         startMenuBtn.onClick.AddListener(LoadStartMenu);
         exitBtn.onClick.AddListener(ExitGame);
@@ -25,9 +27,15 @@ public class UIManager : MonoBehaviour
     {
         pausePressed = !pausePressed;
         if (pausePressed)
-            Time.timeScale = 0;
+        {
+            //Time.timeScale = 0;
+            player.DisableMovement();
+        }
         else
-            Time.timeScale = 1;
+        {
+            //Time.timeScale = 1;
+            player.EnableMovement();
+        }
         pauseBGImage.gameObject.SetActive(pausePressed);
     }
     private void LoadStartMenu()
