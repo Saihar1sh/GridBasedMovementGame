@@ -157,6 +157,7 @@ MonoBehaviour:
   startMenuBtn: {fileID: 746168680}
   exitBtn: {fileID: 892025203}
   pauseBGImage: {fileID: 1685290435}
+  player: {fileID: 323929482}
 --- !u!114 &188429188
 MonoBehaviour:
   m_ObjectHideFlags: 0
