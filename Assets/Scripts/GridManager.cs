@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour
     [Tooltip("Reference prefab for tile sprite")]
     public GameObject tile;
 
+    [HideInInspector]
     public bool gridDone = false;
 
     private Transform[] transforms;
@@ -150,7 +151,7 @@ public class GridManager : MonoBehaviour
     //returns number of rows and columns
     public void GetParameters(ref int row_count, ref int col_count)
     {
-        row_count = rows;
-        col_count = cols;
+        row_count = rows = PlayerPrefs.GetInt("InputRows"); ;
+        col_count = cols = PlayerPrefs.GetInt("InputCols");
     }
 }

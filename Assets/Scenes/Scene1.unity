@@ -154,10 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseBtn: {fileID: 440167397}
-  createGridBtn: {fileID: 0}
   pauseBGImage: {fileID: 1685290435}
-  rows_txt: {fileID: 0}
-  cols_txt: {fileID: 0}
 --- !u!114 &188429188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,9 +742,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rows: 6
-  cols: 12
-  width: 48
-  height: 24
+  cols: 20
+  width: 60
+  height: 20
   tile: {fileID: 7182802997269409797, guid: a8a2d7beffaaa3245b7311b6f979aa82, type: 3}
   gridDone: 0
 --- !u!114 &1885807524

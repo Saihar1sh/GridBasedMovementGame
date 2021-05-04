@@ -832,7 +832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &365907427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -885,8 +885,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playBtn: {fileID: 1745671640}
   exitBtn: {fileID: 1067763732}
-  rows_txt: {fileID: 875816265}
-  cols_txt: {fileID: 128892427}
+  rows_txt: {fileID: 1047464549}
+  cols_txt: {fileID: 51667245}
 --- !u!4 &465158656
 Transform:
   m_ObjectHideFlags: 0
@@ -1927,7 +1927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1464500304
 RectTransform:
   m_ObjectHideFlags: 0

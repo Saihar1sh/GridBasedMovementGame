@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -7,7 +10,9 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     private Button playBtn, exitBtn;
     [SerializeField]
-    private TextMeshProUGUI rows_txt, cols_txt;
+    private TMP_InputField rows_txt, cols_txt;
+
+    private int rows, cols;
 
     private void Awake()
     {
@@ -17,7 +22,7 @@ public class StartMenu : MonoBehaviour
 
     private void PlayGame()
     {
-        //SetGridValues();
+        SetGridValues();
         SceneManager.LoadScene(1);
     }
     private void ExitGame()
@@ -26,10 +31,14 @@ public class StartMenu : MonoBehaviour
     }
     private void SetGridValues()
     {
-        int rows = int.Parse(rows_txt.text);
-        int cols = int.Parse(cols_txt.text);
-        GridManager.Instance.rows = rows;
-        GridManager.Instance.cols = cols;
+        if (int.Parse(rows_txt.text) < 0 || int.Parse(cols_txt.text) < 0)
+            return;
+        else if (int.Parse(rows_txt.text) + int.Parse(cols_txt.text) <= 80)
+        {
+            PlayerPrefs.SetInt("InputRows", int.Parse(rows_txt.text));
+            PlayerPrefs.SetInt("InputCols", int.Parse(cols_txt.text));
+
+        }
     }
 
 }
