@@ -83,7 +83,6 @@ public class GridManager : MonoBehaviour
             for (int j = 0; j < cols; j++)
             {
                 grid[i, j] = transforms[k].transform.position;
-                Debug.Log("(" + i + "," + j + "): " + grid[i, j], transforms[k]);
                 k++;
             }
         }

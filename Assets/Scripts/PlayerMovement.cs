@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -106,14 +103,12 @@ public class PlayerMovement : MonoBehaviour
         {
             x = 0;
             transform.position = gridManager.GetGridPosition(x, y);
-            Debug.Log("From above");
         }
         //checking left side
         if (x < 0)
         {
             x = rows - 1;
             transform.position = gridManager.GetGridPosition(x, y);
-            Debug.Log("From below");
 
         }
         //checking top
@@ -121,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
         {
             y = 0;
             transform.position = gridManager.GetGridPosition(x, y);
-            Debug.Log("From left");
 
         }
         //checking bottom
@@ -129,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
         {
             y = cols - 1;
             transform.position = gridManager.GetGridPosition(x, y);
-            Debug.Log("From right");
 
         }
     }

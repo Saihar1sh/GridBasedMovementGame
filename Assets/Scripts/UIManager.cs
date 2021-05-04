@@ -6,11 +6,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Button pauseBtn, createGridBtn;
+    private Button pauseBtn;
     [SerializeField]
     private Image pauseBGImage;
-    [SerializeField]
-    private Text rows_txt, cols_txt;
 
     private bool pausePressed = false;
 
@@ -18,15 +16,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         pauseBtn.onClick.AddListener(PauseGame);
-        createGridBtn.onClick.AddListener(CreateGrid);
         pauseBGImage.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void PauseGame()
     {
         pausePressed = !pausePressed;
@@ -35,12 +27,5 @@ public class UIManager : MonoBehaviour
         else
             Time.timeScale = 1;
         pauseBGImage.enabled = pausePressed;
-    }
-    private void CreateGrid()
-    {
-        int rows = int.Parse(rows_txt.text);
-        int cols = int.Parse(cols_txt.text);
-        GridManager.Instance.rows = rows;
-        GridManager.Instance.cols = cols;
     }
 }
