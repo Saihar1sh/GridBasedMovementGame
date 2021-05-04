@@ -1,26 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwipeInput : MonoBehaviour
 {
-    private bool tap, swipeLeft, swipeRight, swipeUp, swipeDown, isDragging = false;
+    private bool isDragging = false;
     private Vector2 startTouch, swipeDelta;
 
-    //Properties
-    public Vector2 SwipeDelta { get { return swipeDelta; } }
-    public bool SwipeLeft { get { return swipeLeft; } }
-    public bool SwipeRight { get { return swipeRight; } }
-    public bool SwipeUp { get { return swipeUp; } }
-    public bool SwipeDown { get { return swipeDown; } }
-    public bool IsDragging { get { return isDragging; } }
+    private SwipeInputValues inputValues;
 
+    //Properties
+    public bool IsDragging { get { return isDragging; } }
+    public SwipeInputValues SwipeInputValues { get { return inputValues; } }
 
 
     // Update is called once per frame
     void Update()
     {
-        tap = swipeRight = swipeLeft = swipeUp = swipeDown = false;
+        inputValues = SwipeInputValues.Null;
 
         Inputs();
         CalculateSwipeDistance();
@@ -31,7 +26,6 @@ public class SwipeInput : MonoBehaviour
         #region PC Inputs
         if (Input.GetMouseButtonDown(0))
         {
-            tap = true;
             isDragging = true;
             startTouch = Input.mousePosition;
         }
@@ -46,7 +40,6 @@ public class SwipeInput : MonoBehaviour
         {
             if (Input.touches[0].phase == TouchPhase.Began)
             {
-                tap = true;
                 isDragging = true;
                 startTouch = Input.touches[0].position;
             }
@@ -83,20 +76,29 @@ public class SwipeInput : MonoBehaviour
             if (Mathf.Abs(x) > Mathf.Abs(y))         //Movement in x axis
             {
                 if (x < 0)
-                    swipeLeft = true;
+                    inputValues = SwipeInputValues.SwipeLeft;
                 else
-                    swipeRight = true;
+                    inputValues = SwipeInputValues.SwipeRight;
             }
             else                                   //Movement in y axis
             {
                 if (y < 0)
-                    swipeDown = true;
+                    inputValues = SwipeInputValues.SwipeUp;
                 else
-                    swipeUp = true;
+                    inputValues = SwipeInputValues.SwipeDown;
 
             }
         }
     }
 
 
+}
+
+public enum SwipeInputValues
+{
+    Null,
+    SwipeLeft,
+    SwipeRight,
+    SwipeUp,
+    SwipeDown
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +24,21 @@ public class GridManager : MonoBehaviour
 
     private GridLayoutGroup gridLayoutGroup;
 
+    private static GridManager instance;
+    public static GridManager Instance { get { return instance; } }
+
+
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("There is another Singleton in the class ", instance);
+            Destroy(this);
+        }
         gridLayoutGroup = GetComponent<GridLayoutGroup>();
     }
 
@@ -36,6 +48,11 @@ public class GridManager : MonoBehaviour
         rowHeight = height / rows;
         colWidth = width / cols;
         InstantiateTiles();
+        StartGrid();
+    }
+
+    private void StartGrid()
+    {
         StartCoroutine(GridImplementation());
     }
 

@@ -51,27 +51,28 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-    void UpdateDirection()
+    private void UpdateDirection()
     {
-        if (swipeInput.SwipeLeft)
+        switch (swipeInput.SwipeInputValues)
         {
-            horizontalDirection = -1;
-            verticalDirection = 0;
-        }
-        if (swipeInput.SwipeRight)
-        {
-            horizontalDirection = 1;
-            verticalDirection = 0;
-        }
-        if (swipeInput.SwipeUp)
-        {
-            horizontalDirection = 0;
-            verticalDirection = -1;
-        }
-        if (swipeInput.SwipeDown)
-        {
-            horizontalDirection = 0;
-            verticalDirection = 1;
+            case SwipeInputValues.SwipeLeft:
+                horizontalDirection = -1;
+                verticalDirection = 0;
+                break;
+            case SwipeInputValues.SwipeRight:
+                horizontalDirection = 1;
+                verticalDirection = 0;
+                break;
+            case SwipeInputValues.SwipeUp:
+                horizontalDirection = 0;
+                verticalDirection = 1;
+                break;
+            case SwipeInputValues.SwipeDown:
+                horizontalDirection = 0;
+                verticalDirection = -1;
+                break;
+            case SwipeInputValues.Null:
+                return;
         }
     }
 
@@ -95,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     //travelling to the destination for player 
     private void Movement()
     {
-        transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed * 100 * Time.deltaTime);
     }
 
     private void Teleport()                 //teleporting to another side of screen when reached end of this side
