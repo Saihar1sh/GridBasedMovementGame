@@ -28,12 +28,9 @@ public class StartMenu : MonoBehaviour
     {
         if (int.Parse(rows_txt.text) < 0 || int.Parse(cols_txt.text) < 0)
             return;
-        else if (int.Parse(rows_txt.text) + int.Parse(cols_txt.text) <= 80)
-        {
-            PlayerPrefs.SetInt("InputRows", int.Parse(rows_txt.text));
-            PlayerPrefs.SetInt("InputCols", int.Parse(cols_txt.text));
-            PlayerPrefs.SetInt("InputSpeed", int.Parse(speed_txt.text));
-        }
+        PlayerPrefs.SetInt("InputRows", int.Parse(rows_txt.text));
+        PlayerPrefs.SetInt("InputCols", int.Parse(cols_txt.text));
+        PlayerPrefs.SetInt("InputSpeed", int.Parse(speed_txt.text));
     }
 
 }
