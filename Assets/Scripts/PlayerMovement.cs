@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     {
         gridManager.GetParameters(ref rows, ref cols);     //sets rows and columns count from Gridmanager
         gridManager.GetOrigin(ref x, ref y);               //sets origin tile index according to rows and columns to x and y
+        speed = PlayerPrefs.GetInt("InputSpeed");
     }
 
     private void Update()
