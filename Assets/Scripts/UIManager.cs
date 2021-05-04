@@ -27,15 +27,9 @@ public class UIManager : MonoBehaviour
     {
         pausePressed = !pausePressed;
         if (pausePressed)
-        {
-            //Time.timeScale = 0;
             player.DisableMovement();
-        }
         else
-        {
-            //Time.timeScale = 1;
             player.EnableMovement();
-        }
         pauseBGImage.gameObject.SetActive(pausePressed);
     }
     private void LoadStartMenu()
